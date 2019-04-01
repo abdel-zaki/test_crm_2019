@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use App\Models\AbstractModel;
 
@@ -10,10 +10,12 @@ class UserModel extends AbstractModel
     protected $table = "users";
 
     /**
-     * @return mixed
+     * @param $login
+     * @return array|bool|false|mixed|\PDOStatement
      */
-    public function login()
+    public function findIdByLogin($login)
     {
-        //@TODO
+        return $this->query("SELECT * FROM {$this->model} WHERE login = ?", [$login], true);
     }
+
 }

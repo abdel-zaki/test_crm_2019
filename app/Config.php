@@ -27,8 +27,8 @@ class Config
     public function __construct()
     {
         $this->settings = [
-            "db_user" => "newuser",
-            "db_pass" => "password",
+            "db_user" => "root",
+            "db_pass" => "",
             "db_host" => "localhost",
             "db_name" => "crm"
         ];

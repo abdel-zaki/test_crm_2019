@@ -9,7 +9,7 @@ class ApiService
     /** @var string $content_type */
     public $content_type = "application/json";
     /** @var string  $methode*/
-    public $methode = "";
+    public $methode = 'palindrome';
     /** @var int $code */
     public $code = 200;
 
@@ -19,6 +19,7 @@ class ApiService
     public function __construct()
     {
         $this->inputs();
+        $this->processApi();
     }
 
     /**
@@ -70,6 +71,7 @@ class ApiService
         switch ($this->getRequestMethod()) {
             case "POST":
                 $this->request = $this->cleanInputs($_POST);
+                $this->request['request'] = $this->methode;
                 break;
             case "GET":
             case "DELETE":
@@ -83,7 +85,6 @@ class ApiService
                 $this->response('', 406);
                 break;
         }
-
     }
 
     /**
@@ -104,7 +105,7 @@ class ApiService
     private function setHeader()
     {
         header("HTTP/1.1 " . $this->code . " " . $this->getStatusMessage());
-        header("Content-Type:" . $this->_content_type);
+        header("Content-Type:" . $this->content_type);
     }
 
     /**

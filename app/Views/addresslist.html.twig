@@ -2,12 +2,21 @@
 
 {% block body %}
 
-    <div><h4 class="text-center">Liste des adresses [ {{ contact.nom }} {{ contact.prenom }} : {{ contact.email }}
-            ]</h4></div>
-    <div class="row row col-md-12 pull-right ">
-        <a href="index.php/?p=address.add&id={{ idContact }}" class="btn btn-primary btn-xs pull-right"><b>+</b> Ajouter une
-            adresse</a>
+    <div>
+        <h4 class="text-center">Liste des adresses [ {% if contact is defined %}{{ contact.nom }} {{ contact.prenom }} : {{ contact.email }} {% endif %} ]</h4>
     </div>
+    <div class="row row col-md-12 pull-right ">
+        <a href="/address/add/{{ idContact }}" class="btn btn-primary btn-xs pull-right"><b>+</b> Créer une adresse</a>
+    </div>
+
+    {% if message is defined %}
+        <div>&nbsp;</div>
+        {% for m in message %}
+            <div class="alert alert-danger">
+                {{ m }}
+            </div>
+        {% endfor %}
+    {% endif %}
 
     <div class="row col-md-12 ">
         <table class="table table-striped custab">
@@ -31,10 +40,10 @@
                     <td>{{ addresse.city|e }}</td>
                     <td>{{ addresse.country|e }}</td>
                     <td class="text-center">
-                        <a class='btn btn-info btn-xs' href="/index.php?p=address.edit&id={{ addresse.id }}"><span
-                                    class="glyphicon glyphicon-edit"></span> Edit</a>
-                        <a href="/address.delete/{{ addresse.id }}" class="btn btn-danger btn-xs"><span
-                                    class="glyphicon glyphicon-remove"></span> Del</a></td>
+                        <a class='btn btn-info btn-xs' href="/address/edit/{{ addresse.id }}"><span
+                                    class="glyphicon glyphicon-edit"></span> Editer</a>
+                        <a href="/address/delete/{{ addresse.id }}" class="btn btn-danger btn-xs"><span
+                                    class="glyphicon glyphicon-remove"></span> Supprimer</a></td>
                 </tr>
             {% endfor %}
 

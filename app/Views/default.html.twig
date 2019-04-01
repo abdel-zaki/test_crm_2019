@@ -40,25 +40,33 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/index.php?p=contact.index">Accueil <span class="sr-only"></span></a>
+                    <a class="nav-link" href="/contact/index">Accueil <span class="sr-only"></span></a>
                 </li>
             </ul>
         </div>
 
     </nav>
-    <div class="row"><h5 class="text-right col-md-12">{{ session.auth.login }} : {{ session.auth.email }} </h5></div>
+    <div class="row">
+        <h5 class="text-right col-md-12">
+            {% if session.auth is defined %}
+                <span>{{ session.auth.login }} : {{ session.auth.email }}</span> |
+                <a href="/user/logout">Déconnexion</a>
+            {% endif %}
+        </h5>
+    </div>
     <main>
         {% block body %}{% endblock %}
     </main>
 </div>
 <script>
 
+    var host = window.location.protocol+'//'+window.location.hostname;
     $("#nom").focusout(function () {
-        var nom = $('#nom').val();
+        var nom = $.trim($('#nom').val());
         if(nom){
             $.ajax({
                 type: 'POST',
-                url: 'http://leboncoin.local/palindrome',
+                url: host+'/api/palindrome',
                 data: {
                     'name': nom
                 },
@@ -73,6 +81,7 @@
                 }
             });
         } else {
+            $('#alert').show();
             $('#nameStatus').empty().append("<span class='text-danger'>- Le nom du contact ne peut être nul </span>");
         }
 
@@ -84,7 +93,7 @@
             $('#progress').show();
             $.ajax({
                 type: 'POST',
-                url: 'http://leboncoin.local/email',
+                url: host+'/api/email',
                 data: {
                     'email': $('#email').val()
                 },

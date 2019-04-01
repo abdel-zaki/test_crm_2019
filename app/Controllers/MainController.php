@@ -6,6 +6,8 @@ use App;
 use App\Components\Auth\Auth;
 use \Twig_Loader_Filesystem;
 use \Twig_Environment;
+use \App\Models\ContactModel as Contact;
+use Exception;
 
 class MainController
 {
@@ -21,6 +23,7 @@ class MainController
         $this->twig   = new \Twig_Environment($this->loader);
         $this->auth   = new Auth(App::getInstance()->getDatabase());
         $this->twig->addGlobal('session', $_SESSION);
+        $this->Contact = new Contact(App::getInstance()->getDatabase());
     }
 
     /**
@@ -39,7 +42,7 @@ class MainController
      */
     public function apiClient($methode, $datas = [])
     {
-        $api = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $methode;
+        $api = $_SERVER['HTTP_HOST'].'/api/'.$methode;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $api);
         curl_setopt($curl, CURLOPT_POST, true);

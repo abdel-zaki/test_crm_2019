@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Models;
+
+use App;
 use App\Database;
 use App\Models\AbstractModel;
+use Exception;
 
 class ContactModel extends AbstractModel
 {
@@ -16,8 +19,6 @@ class ContactModel extends AbstractModel
     public function __construct(Database $database)
     {
         parent::__construct($database);
-
-        $this->model = new AbstractModel();
     }
 
     /**
@@ -28,6 +29,23 @@ class ContactModel extends AbstractModel
      */
     public function getContactByUser($idUser)
     {
-        return $this->query("SELECT * FROM {$this->table} WHERE userId = $idUser");
+        $result = $this->query("SELECT * FROM {$this->table} WHERE userId = $idUser");
+        return $result;
     }
+
+    /**
+     * Méthode de récupération d'un contact par son id
+     * @param $idContact
+     *
+     * @return array|bool|mixed|\PDOStatement
+     */
+    public function getContactById($idContact)
+    {
+        $result = $this->query("SELECT * FROM {$this->table} WHERE id = $idContact");
+        if (count($result) == 0) {
+            throw new Exception('Contact introuvable !');
+        }
+        return $result;
+    }
+
 }

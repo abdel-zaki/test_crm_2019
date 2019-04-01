@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\AbstractModel;
+use App\Models\ContactModel;
+use Exception;
 
 class AddresseModel extends AbstractModel
 {
@@ -15,7 +17,11 @@ class AddresseModel extends AbstractModel
      */
     public function getAll()
     {
-        return $this->query("SELECT * FROM $this->table");
+        $result = $this->query("SELECT * FROM $this->table");
+        if (!$result) {
+            throw new Exception('Erreur : Aucune adresse trouvée !');
+        }
+        return $result;
     }
 
     /**
@@ -24,9 +30,13 @@ class AddresseModel extends AbstractModel
      *
      * @return array|bool|mixed|\PDOStatement
      */
-    public function getByContact(int $idContact)
+    public function getByContact($idContact)
     {
-        return $this->query("SELECT * FROM $this->table WHERE idContact = $idContact");
+        $result = $this->query("SELECT * FROM $this->table WHERE idContact = $idContact");
+        if (!$result) {
+            throw new Exception('Aucune adresse trouvée pour ce contact !');
+        }
+        return $result;
     }
 
     /**
@@ -37,6 +47,11 @@ class AddresseModel extends AbstractModel
      */
     public function getById($idAdresse)
     {
-        return $this->findById($idAdresse);
+        $result = $this->findById($idAdresse);
+        if (!$result) {
+            throw new Exception('Cette adresse n\'existe pas !');
+        }
+        return $result;
     }
+
 }
