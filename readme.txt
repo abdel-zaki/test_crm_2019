@@ -2,7 +2,7 @@ Documentation d'installation
 ----------------------------
 
 1)	Installation
-- A la racine src/, exécuter la commande :
+- A la racine exécuter la commande :
 composer install
 - Exécuter upgrade.sql (Création et optimisation de la BD)
 
@@ -13,12 +13,12 @@ Login : admin / pwd : admin
 
 
 3)	Test unitaire
-Le contrôleur            /src/app/Controllers/ContactController.php
-est testé par la classe  /src/ContactControllerTest.php
+Le contrôleur           /app/Controllers/ContactController.php
+à tester par la classe  /ContactControllerTest.php
 
 
-Pour lancer le test, exécuter à la racine /src/ :
-phpunit ContactControllerTest.php -stderr
+Pour lancer le test, exécuter à la racine :
+> phpunit ContactControllerTest.php -stderr
 
 
 NB : 
